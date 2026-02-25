@@ -26,6 +26,6 @@ public class ProductController {
     public String viewProductsPage(Model model) {
         List<Product> products = productService.findAll();
         model.addAttribute("products", products);
-        return "products/all";
+        return "products/show";
     }
 }
