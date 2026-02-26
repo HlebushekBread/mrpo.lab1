@@ -18,7 +18,7 @@ public class Order {
     private Date deliveryDate;
     @ManyToOne
     @JoinColumn(name = "address_id")
-    private Address address;
+    private Address deliveryAddress;
     @Column(name = "user_name")
     private String userName;
     @Column(name = "receive_code")
@@ -42,8 +42,8 @@ public class Order {
         return deliveryDate;
     }
 
-    public Address getAddress() {
-        return address;
+    public Address getDeliveryAddress() {
+        return deliveryAddress;
     }
 
     public String getUserName() {
@@ -74,8 +74,8 @@ public class Order {
         this.deliveryDate = deliveryDate;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setDeliveryAddress(Address deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
     }
 
     public void setUserName(String userName) {
@@ -96,7 +96,7 @@ public class Order {
                 ", " + "\"" + this.productArticle + "\"" +
                 ", " + this.orderDate +
                 ", " + this.deliveryDate +
-                ", " + this.address +
+                ", " + this.deliveryAddress +
                 ", " + this.userName +
                 ", " + this.receiveCode +
                 ", " + this.status + "}";
