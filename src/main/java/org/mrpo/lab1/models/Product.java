@@ -1,6 +1,8 @@
 package org.mrpo.lab1.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.Objects;
 
@@ -9,25 +11,44 @@ import java.util.Objects;
 public class Product {
     @Id
     @Column(name = "article")
+    @NotEmpty(message = "Article cannot be empty")
     private String article;
+
     @Column(name = "name")
+    @NotEmpty(message = "Name cannot be empty")
     private String name;
+
     @Column(name = "unit")
+    @NotEmpty(message = "Unit cannot be empty")
     private String unit;
+
     @Column(name = "price")
+    @NotEmpty(message = "Price cannot be empty")
+    @Min(value = 0, message = "Price cannot be negative")
     private double price;
+
     @Column(name = "provider")
     private String provider;
+
     @Column(name = "manufacturer")
     private String manufacturer;
+
     @Column(name = "category")
     private String category;
+
     @Column(name = "discount")
+    @NotEmpty(message = "Discount cannot be empty")
+    @Min(value = 0, message = "Discount cannot be negative")
     private double discount;
+
     @Column(name = "amount")
+    @NotEmpty(message = "Amount cannot be empty")
+    @Min(value = 0, message = "Amount cannot be negative")
     private double amount;
+
     @Column(name = "description")
     private String description;
+
     @Column(name = "image")
     private String image;
 

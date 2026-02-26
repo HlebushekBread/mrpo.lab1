@@ -1,6 +1,7 @@
 package org.mrpo.lab1.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.List;
 
@@ -8,9 +9,12 @@ import java.util.List;
 @Table(name = "delivery_address")
 public class Address {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
+
     @Column(name = "address")
+    @NotEmpty(message = "Address cannot be empty")
     private String address;
 
     public long getId() {

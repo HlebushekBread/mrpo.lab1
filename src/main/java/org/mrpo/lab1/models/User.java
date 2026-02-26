@@ -1,23 +1,33 @@
 package org.mrpo.lab1.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "`user`")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
+
     @Column(name = "role")
+    @NotEmpty(message = "Role should be valid")
     private String role;
+
     @Column(name = "name")
+    @NotEmpty(message = "Name cannot be empty")
     private String name;
+
     @Column(name = "username", unique = true)
+    @Email
+    @NotEmpty(message = "Email cannot be empty")
     private String username;
+
     @Column(name = "password")
+    @NotEmpty(message = "Password cannot be empty")
     private String password;
 
     public User() {}
