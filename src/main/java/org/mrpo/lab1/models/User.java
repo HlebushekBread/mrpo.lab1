@@ -19,7 +19,7 @@ public class User {
 
     @Column(name = "name")
     @NotEmpty(message = "Name cannot be empty")
-    private String name;
+    private String fullName;
 
     @Column(name = "username", unique = true)
     @Email
@@ -32,10 +32,10 @@ public class User {
 
     public User() {}
 
-    public User(long id, String role, String name, String username, String password) {
+    public User(long id, String role, String fullName, String username, String password) {
         this.id = id;
         this.role = role;
-        this.name = name;
+        this.fullName = fullName;
         this.username = username;
         this.password = password;
     }
@@ -48,8 +48,8 @@ public class User {
         return role;
     }
 
-    public String getName() {
-        return name;
+    public String getFullName() {
+        return fullName;
     }
 
     public String getUsername() {
@@ -68,8 +68,8 @@ public class User {
         this.role = role;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public void setUsername(String login) {
@@ -84,7 +84,7 @@ public class User {
     public String toString() {
         return "User{" + id +
                 ", " + role +
-                ", " + "\"" + name + "\"" +
+                ", " + "\"" + fullName + "\"" +
                 ", " + username +
                 ", " + password + "}";
     }

@@ -19,8 +19,8 @@ public class OrderService {
         this.orderRepository = orderRepository;
     }
 
-    public List<Order> findAllByUserName(String userName) {
-        return orderRepository.findAllByUserName(userName);
+    public List<Order> findAllByUserFullName(String userFullName) {
+        return orderRepository.findAllByUserName(userFullName);
     }
 
     public List<Order> findAll() {

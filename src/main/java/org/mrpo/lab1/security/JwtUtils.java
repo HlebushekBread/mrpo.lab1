@@ -33,12 +33,12 @@ public class JwtUtils {
         List<String> authoritiesList = userDetails.getAuthorities().stream().
                 map(GrantedAuthority::getAuthority).toList();
         claims.put("authorities", authoritiesList);
-        claims.put("name", userDetails.getUser().getName());
+        claims.put("full name", userDetails.getUser().getFullName());
         return Jwts.builder()
-                .setSubject(userDetails.getUsername())
-                .setClaims(claims)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtLifetime))
+                .subject(userDetails.getUsername())
+                .claims(claims)
+                .issuedAt(new Date())
+                .expiration(new Date((new Date()).getTime() + jwtLifetime))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
@@ -64,8 +64,8 @@ public class JwtUtils {
         return getAllClaimsFromToken(token).getSubject();
     }
 
-    public String getNameFromToken(String token) {
-        return getAllClaimsFromToken(token).get("name", String.class);
+    public String getFullNameFromToken(String token) {
+        return getAllClaimsFromToken(token).get("full name", String.class);
     }
 
     public List<String> getAuthoritiesFromToken(String token) {
