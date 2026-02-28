@@ -35,3 +35,4 @@ build/
 
 ### CFG ###
 **/database.properties
+**/jwt.properties

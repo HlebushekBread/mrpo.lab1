@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/api/orders")
 public class OrderController {
 
     private final OrderService orderService;
@@ -23,7 +23,7 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @GetMapping("/show")
+    @GetMapping("/get")
     public List<Order> viewUserProductsPage() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();

@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("/api")
 public class MainController {
     @GetMapping("")
     public String redirect() {
-        return "redirect:products/all";
+        return "redirect:api/products/all";
     }
 }
