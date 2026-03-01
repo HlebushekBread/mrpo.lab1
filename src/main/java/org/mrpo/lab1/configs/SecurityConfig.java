@@ -1,20 +1,17 @@
 package org.mrpo.lab1.configs;
 
-import org.mrpo.lab1.dtos.JwtRequest;
+import org.mrpo.lab1.security.JwtRequestFilter;
 import org.mrpo.lab1.security.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -45,7 +42,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/orders/all").hasAuthority("VIEW_ALL_ORDERS")
                         .requestMatchers("/api/auth/login").permitAll()
-                        .anyRequest().permitAll/*authenticated*/()
+                        .anyRequest().authenticated()
                 )
                 .cors(customizer -> customizer.configurationSource(corsConfigurationSource()))
                 .csrf(customizer -> customizer.disable())
