@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "`order`")
@@ -13,9 +14,9 @@ public class Order {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "product_article")
-    @NotEmpty(message = "Need at least one position in order")
-    private String productArticle;
+    @OneToMany
+    @JoinColumn(name = "order_id")
+    private List<OrderProduct> orderProducts;
 
     @Column(name = "order_date")
     @NotEmpty(message = "Order date cannot be empty")
@@ -28,26 +29,26 @@ public class Order {
     @ManyToOne
     @NotEmpty(message = "Delivery address cannot be empty")
     @JoinColumn(name = "address_id")
-    private Address deliveryAddress;
+    private Address address;
 
-    @Column(name = "user_name")
-    @NotEmpty(message = "User name cannot be empty")
-    private String userName;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name = "receive_code")
     @NotEmpty(message = "Receive code cannot be empty")
     private int receiveCode;
 
-    @Column(name = "status")
-    @NotEmpty(message = "Status cannot be empty")
-    private String status;
+    @ManyToOne
+    @JoinColumn(name = "status_id")
+    private Status status;
 
     public long getId() {
         return id;
     }
 
-    public String getProductArticle() {
-        return productArticle;
+    public List<OrderProduct> getOrderProducts() {
+        return orderProducts;
     }
 
     public Date getOrderDate() {
@@ -59,18 +60,18 @@ public class Order {
     }
 
     public Address getDeliveryAddress() {
-        return deliveryAddress;
+        return address;
     }
 
-    public String getUserName() {
-        return userName;
+    public User getUser() {
+        return user;
     }
 
     public int getReceiveCode() {
         return receiveCode;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
@@ -78,8 +79,8 @@ public class Order {
         this.id = id;
     }
 
-    public void setProductArticle(String productArticle) {
-        this.productArticle = productArticle;
+    public void setOrderProducts(List<OrderProduct> orderProducts) {
+        this.orderProducts = orderProducts;
     }
 
     public void setOrderDate(Date orderDate) {
@@ -90,31 +91,19 @@ public class Order {
         this.deliveryDate = deliveryDate;
     }
 
-    public void setDeliveryAddress(Address deliveryAddress) {
-        this.deliveryAddress = deliveryAddress;
+    public void setDeliveryAddress(Address address) {
+        this.address = address;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public void setReceiveCode(int receiveCode) {
         this.receiveCode = receiveCode;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "Order{" + this.id +
-                ", " + "\"" + this.productArticle + "\"" +
-                ", " + this.orderDate +
-                ", " + this.deliveryDate +
-                ", " + this.deliveryAddress +
-                ", " + this.userName +
-                ", " + this.receiveCode +
-                ", " + this.status + "}";
     }
 }

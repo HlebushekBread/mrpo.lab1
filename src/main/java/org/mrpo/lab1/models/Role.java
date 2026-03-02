@@ -6,35 +6,42 @@ import jakarta.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Entity
-@Table(name = "address_catalog")
-public class Address {
+@Table(name = "role_catalog")
+public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
-    @Column(name = "full_address")
-    @NotEmpty(message = "Address cannot be empty")
-    private String fullAddress;
+    @Column(name = "name")
+    @NotEmpty(message = "Role cannot be empty")
+    private String name;
+
+    public Role() {}
+
+    public Role(long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public long getId() {
         return id;
     }
 
-    public String getFullAddress() {
-        return fullAddress;
+    public String getName() {
+        return name;
     }
 
     public void setId(long id) {
         this.id = id;
     }
 
-    public void setFullAddress(String fullAddress) {
-        this.fullAddress = fullAddress;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
-        return getFullAddress();
+        return getName();
     }
 }

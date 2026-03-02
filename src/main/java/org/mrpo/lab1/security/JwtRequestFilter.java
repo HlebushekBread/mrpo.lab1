@@ -28,11 +28,13 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String authHeader = request.getHeader("Authorization");
         Map<String, String> principal = new HashMap<>();
         String jwt = null;
+        principal.put("id", null);
         principal.put("username", null);
         principal.put("fullName", null);
         if(authHeader != null && authHeader.startsWith("Bearer ")) {
             jwt = authHeader.substring(7);
             try {
+                principal.put("id", jwtUtils.getIdFromToken(jwt));
                 principal.put("username", jwtUtils.getUsernameFromToken(jwt));
                 principal.put("fullName", jwtUtils.getFullNameFromToken(jwt));
             } catch (ExpiredJwtException e) {

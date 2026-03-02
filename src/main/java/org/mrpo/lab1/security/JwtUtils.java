@@ -32,8 +32,9 @@ public class JwtUtils {
         Map<String, Object> claims = new HashMap<>();
         List<String> authoritiesList = userDetails.getAuthorities().stream().
                 map(GrantedAuthority::getAuthority).toList();
+        claims.put("id", String.valueOf(userDetails.getUser().getId()));
         claims.put("fullName", userDetails.getUser().getFullName());
-        claims.put("role", userDetails.getUser().getRole());
+        claims.put("role", userDetails.getUser().getRole().getName());
         claims.put("authorities", authoritiesList);
         return Jwts.builder()
                 .subject(userDetails.getUsername())
@@ -65,12 +66,12 @@ public class JwtUtils {
         return getAllClaimsFromToken(token).getSubject();
     }
 
-    public String getFullNameFromToken(String token) {
-        return getAllClaimsFromToken(token).get("fullName", String.class);
+    public String getIdFromToken(String token) {
+        return getAllClaimsFromToken(token).get("id", String.class);
     }
 
-    public String getRoleFromToken(String token) {
-        return getAllClaimsFromToken(token).get("role", String.class);
+    public String getFullNameFromToken(String token) {
+        return getAllClaimsFromToken(token).get("fullName", String.class);
     }
 
     public List<String> getAuthoritiesFromToken(String token) {

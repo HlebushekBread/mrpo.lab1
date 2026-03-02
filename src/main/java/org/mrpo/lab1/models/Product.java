@@ -18,23 +18,26 @@ public class Product {
     @NotEmpty(message = "Name cannot be empty")
     private String name;
 
-    @Column(name = "unit")
-    @NotEmpty(message = "Unit cannot be empty")
-    private String unit;
+    @ManyToOne
+    @JoinColumn(name = "unit_id")
+    private Unit unit;
 
     @Column(name = "price")
     @NotEmpty(message = "Price cannot be empty")
     @Min(value = 0, message = "Price cannot be negative")
     private double price;
 
-    @Column(name = "provider")
-    private String provider;
+    @ManyToOne
+    @JoinColumn(name = "provider_id")
+    private Provider provider;
 
-    @Column(name = "manufacturer")
-    private String manufacturer;
+    @ManyToOne
+    @JoinColumn(name = "manufacturer_id")
+    private Manufacturer manufacturer;
 
-    @Column(name = "category")
-    private String category;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     @Column(name = "discount")
     @NotEmpty(message = "Discount cannot be empty")
@@ -62,7 +65,7 @@ public class Product {
         return name;
     }
 
-    public String getUnit() {
+    public Unit getUnit() {
         return unit;
     }
 
@@ -70,15 +73,15 @@ public class Product {
         return price;
     }
 
-    public String getProvider() {
-        return this.provider;
+    public Provider getProvider() {
+        return provider;
     }
 
-    public String getManufacturer() {
+    public Manufacturer getManufacturer() {
         return manufacturer;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
@@ -106,7 +109,7 @@ public class Product {
         this.name = name;
     }
 
-    public void setUnit(String unit) {
+    public void setUnit(Unit unit) {
         this.unit = unit;
     }
 
@@ -114,15 +117,15 @@ public class Product {
         this.price = price;
     }
 
-    public void setProvider(String provider) {
+    public void setProvider(Provider provider) {
         this.provider = provider;
     }
 
-    public void setManufacturer(String manufacturer) {
+    public void setManufacturer(Manufacturer manufacturer) {
         this.manufacturer = manufacturer;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
@@ -140,20 +143,5 @@ public class Product {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    @Override
-    public String toString() {
-        return "Product{" + this.article +
-                ", " + this.name +
-                ", " + this.unit +
-                ", " + this.price +
-                ", " + this.provider +
-                ", " + this.manufacturer +
-                ", " + this.category +
-                ", " + this.discount +
-                ", " + this.amount +
-                ", " + "\"" + this.description + "\"" +
-                ", " + (!Objects.equals(this.image, "") ? this.image : "No img") + "}";
     }
 }

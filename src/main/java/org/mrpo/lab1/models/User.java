@@ -13,11 +13,11 @@ public class User {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "role")
-    @NotEmpty(message = "Role should be valid")
-    private String role;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
 
-    @Column(name = "name")
+    @Column(name = "full_name")
     @NotEmpty(message = "Name cannot be empty")
     private String fullName;
 
@@ -32,7 +32,7 @@ public class User {
 
     public User() {}
 
-    public User(long id, String role, String fullName, String username, String password) {
+    public User(long id, Role role, String fullName, String username, String password) {
         this.id = id;
         this.role = role;
         this.fullName = fullName;
@@ -44,7 +44,7 @@ public class User {
         return id;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
@@ -64,7 +64,7 @@ public class User {
         this.id = id;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -78,14 +78,5 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" + id +
-                ", " + role +
-                ", " + "\"" + fullName + "\"" +
-                ", " + username +
-                ", " + password + "}";
     }
 }

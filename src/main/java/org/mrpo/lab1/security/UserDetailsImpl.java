@@ -23,23 +23,27 @@ public class UserDetailsImpl implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> grantedAuthorities = new ArrayList<>();
 
+        //GUEST
         SimpleGrantedAuthority viewProductsAuthority = new SimpleGrantedAuthority("VIEW_PRODUCTS");
+        //USER
         SimpleGrantedAuthority viewUserOrdersAuthority = new SimpleGrantedAuthority("VIEW_USER_ORDERS");
+        //MANAGER
         SimpleGrantedAuthority searchAndSortProductsAuthority = new SimpleGrantedAuthority("SEARCH_AND_SORT_PRODUCTS");
         SimpleGrantedAuthority viewAllOrdersAuthority = new SimpleGrantedAuthority("VIEW_ALL_ORDERS");
+        //ADMIN
         SimpleGrantedAuthority redactProductsAuthority = new SimpleGrantedAuthority("REDACT_PRODUCTS");
         SimpleGrantedAuthority redactOrdersAuthority = new SimpleGrantedAuthority("REDACT_ORDERS");
 
-        switch (user.getRole()) {
-            case "Администратор":
+        switch (String.valueOf(user.getRole().getId())) {
+            case "4":
                 grantedAuthorities.add(redactOrdersAuthority);
                 grantedAuthorities.add(redactProductsAuthority);
-            case "Менеджер":
+            case "3":
                 grantedAuthorities.add(viewAllOrdersAuthority);
                 grantedAuthorities.add(searchAndSortProductsAuthority);
-            case "Авторизированный клиент":
+            case "2":
                 grantedAuthorities.add(viewUserOrdersAuthority);
-            case "Гость":
+            case "1":
                 grantedAuthorities.add(viewProductsAuthority);
         }
 

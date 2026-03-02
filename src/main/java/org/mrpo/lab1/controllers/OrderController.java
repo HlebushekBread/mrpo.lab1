@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.swing.plaf.synth.SynthTableHeaderUI;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -30,8 +28,8 @@ public class OrderController {
     @GetMapping("/get")
     public List<Order> viewUserProductsPage() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Map<String, String> principal = (HashMap<String, String>)authentication.getPrincipal();
-        return orderService.findAllByUserFullName(principal.get("fullName"));
+        Map<String, String> principal = (HashMap<String, String>) authentication.getPrincipal();
+        return Collections.emptyList();
     }
 
     @GetMapping("/all")

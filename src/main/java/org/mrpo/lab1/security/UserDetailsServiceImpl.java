@@ -1,5 +1,6 @@
 package org.mrpo.lab1.security;
 
+import org.mrpo.lab1.models.Role;
 import org.mrpo.lab1.models.User;
 import org.mrpo.lab1.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     public UserDetailsImpl loadGuestUser() {
-        User user = new User(0, "Гость", "Гость", "guest", "guest");
+        User user = new User(0, new Role(1, "Гость"), "Гость", "guest", "guest");
         return new UserDetailsImpl(user);
     }
 }
