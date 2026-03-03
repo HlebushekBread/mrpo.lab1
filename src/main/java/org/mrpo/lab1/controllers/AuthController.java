@@ -1,6 +1,5 @@
 package org.mrpo.lab1.controllers;
 
-import io.jsonwebtoken.ExpiredJwtException;
 import org.mrpo.lab1.dtos.JwtRequest;
 import org.mrpo.lab1.dtos.JwtResponse;
 import org.mrpo.lab1.exceptions.AppException;
