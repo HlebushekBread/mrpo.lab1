@@ -59,7 +59,7 @@ public class Order {
         return deliveryDate;
     }
 
-    public Address getDeliveryAddress() {
+    public Address getAddress() {
         return address;
     }
 
@@ -91,7 +91,7 @@ public class Order {
         this.deliveryDate = deliveryDate;
     }
 
-    public void setDeliveryAddress(Address address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 

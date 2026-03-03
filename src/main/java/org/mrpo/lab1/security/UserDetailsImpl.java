@@ -23,28 +23,37 @@ public class UserDetailsImpl implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> grantedAuthorities = new ArrayList<>();
 
-        //GUEST
         SimpleGrantedAuthority viewProductsAuthority = new SimpleGrantedAuthority("VIEW_PRODUCTS");
-        //USER
         SimpleGrantedAuthority viewUserOrdersAuthority = new SimpleGrantedAuthority("VIEW_USER_ORDERS");
-        //MANAGER
         SimpleGrantedAuthority searchAndSortProductsAuthority = new SimpleGrantedAuthority("SEARCH_AND_SORT_PRODUCTS");
         SimpleGrantedAuthority viewAllOrdersAuthority = new SimpleGrantedAuthority("VIEW_ALL_ORDERS");
-        //ADMIN
         SimpleGrantedAuthority redactProductsAuthority = new SimpleGrantedAuthority("REDACT_PRODUCTS");
         SimpleGrantedAuthority redactOrdersAuthority = new SimpleGrantedAuthority("REDACT_ORDERS");
 
         switch (String.valueOf(user.getRole().getId())) {
-            case "4":
-                grantedAuthorities.add(redactOrdersAuthority);
-                grantedAuthorities.add(redactProductsAuthority);
-            case "3":
-                grantedAuthorities.add(viewAllOrdersAuthority);
-                grantedAuthorities.add(searchAndSortProductsAuthority);
-            case "2":
-                grantedAuthorities.add(viewUserOrdersAuthority);
             case "1":
                 grantedAuthorities.add(viewProductsAuthority);
+                break;
+            case "2":
+                grantedAuthorities.add(viewProductsAuthority);
+
+                grantedAuthorities.add(viewUserOrdersAuthority);
+                break;
+            case "3":
+                grantedAuthorities.add(viewProductsAuthority);
+
+                grantedAuthorities.add(searchAndSortProductsAuthority);
+                grantedAuthorities.add(viewAllOrdersAuthority);
+                break;
+            case "4":
+                grantedAuthorities.add(viewProductsAuthority);
+
+                grantedAuthorities.add(searchAndSortProductsAuthority);
+                grantedAuthorities.add(viewAllOrdersAuthority);
+
+                grantedAuthorities.add(redactProductsAuthority);
+                grantedAuthorities.add(redactOrdersAuthority);
+                break;
         }
 
         return grantedAuthorities;

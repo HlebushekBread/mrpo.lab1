@@ -17,13 +17,11 @@ import io.jsonwebtoken.*;
 @PropertySource("classpath:jwt.properties")
 public class JwtUtils {
 
-    private final Environment environment;
     private String jwtSecret;
     private int jwtLifetime;
 
     @Autowired
     public JwtUtils(Environment environment) {
-        this.environment = environment;
         this.jwtSecret = environment.getProperty("jwt.secret");
         this.jwtLifetime = Integer.parseInt(environment.getProperty("jwt.lifetime"));
     }

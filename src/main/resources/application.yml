@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    aws:
+      s3:
+        endpoint: http://localhost:9000
+        region: us-east-1
+        path-style-access-enabled: true
+      credentials:
+        access-key: minioadmin
+        secret-key: minioadmin
+      region:
+        static: us-east-1

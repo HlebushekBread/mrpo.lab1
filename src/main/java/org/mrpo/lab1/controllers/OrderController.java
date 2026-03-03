@@ -29,7 +29,7 @@ public class OrderController {
     public List<Order> viewUserProductsPage() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Map<String, String> principal = (HashMap<String, String>) authentication.getPrincipal();
-        return Collections.emptyList();
+        return orderService.findAllByUserId(Long.valueOf(principal.get("id")));
     }
 
     @GetMapping("/all")
