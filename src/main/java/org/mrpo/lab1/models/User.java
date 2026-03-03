@@ -1,5 +1,6 @@
 package org.mrpo.lab1.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
@@ -26,6 +27,7 @@ public class User {
     @NotEmpty(message = "Email cannot be empty")
     private String username;
 
+    @JsonIgnore
     @Column(name = "password")
     @NotEmpty(message = "Password cannot be empty")
     private String password;
