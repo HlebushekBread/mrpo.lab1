@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.GrantedAuthority;
@@ -14,17 +15,11 @@ import org.springframework.stereotype.Component;
 import io.jsonwebtoken.*;
 
 @Component
-@PropertySource("classpath:jwt.properties")
 public class JwtUtils {
-
+    @Value("${jwt.secret}")
     private String jwtSecret;
+    @Value("${jwt.lifetime}")
     private int jwtLifetime;
-
-    @Autowired
-    public JwtUtils(Environment environment) {
-        this.jwtSecret = environment.getProperty("jwt.secret");
-        this.jwtLifetime = Integer.parseInt(environment.getProperty("jwt.lifetime"));
-    }
 
     public String generateToken(UserDetailsImpl userDetails) {
         Map<String, Object> claims = new HashMap<>();
