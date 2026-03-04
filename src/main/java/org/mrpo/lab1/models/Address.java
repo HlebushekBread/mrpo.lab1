@@ -2,9 +2,14 @@ package org.mrpo.lab1.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "address_catalog")
 public class Address {
@@ -16,25 +21,4 @@ public class Address {
     @Column(name = "full_address")
     @NotEmpty(message = "Address cannot be empty")
     private String fullAddress;
-
-    public long getId() {
-        return id;
-    }
-
-    public String getFullAddress() {
-        return fullAddress;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setFullAddress(String fullAddress) {
-        this.fullAddress = fullAddress;
-    }
-
-    @Override
-    public String toString() {
-        return getFullAddress();
-    }
 }

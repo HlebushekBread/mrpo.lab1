@@ -1,5 +1,6 @@
 package org.mrpo.lab1.services;
 
+import lombok.RequiredArgsConstructor;
 import org.mrpo.lab1.models.Order;
 import org.mrpo.lab1.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,15 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
 public class OrderService {
     private final OrderRepository orderRepository;
-
-    @Autowired
-    public OrderService(OrderRepository orderRepository) {
-        this.orderRepository = orderRepository;
-    }
 
     public List<Order> findAllByUserId(Long userId) {
         return orderRepository.findAllByUserId(userId);
@@ -28,8 +25,7 @@ public class OrderService {
     }
 
     public Order findById(long id) {
-        Optional<Order> order = orderRepository.findById(id);
-        return order.orElse(null);
+        return orderRepository.findById(id).orElse(null);
     }
 
     @Transactional

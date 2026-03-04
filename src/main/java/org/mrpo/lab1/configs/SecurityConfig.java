@@ -41,7 +41,12 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/images/upload").hasAuthority("REDACT_PRODUCTS")
+                        .requestMatchers("/api/manufacturers").hasAnyAuthority("EDIT_PRODUCTS", "EDIT_ORDERS")
+                        .requestMatchers("/api/providers").hasAnyAuthority("EDIT_PRODUCTS", "EDIT_ORDERS")
+                        .requestMatchers("/api/categories").hasAnyAuthority("EDIT_PRODUCTS", "EDIT_ORDERS")
+                        .requestMatchers("/api/units").hasAnyAuthority("EDIT_PRODUCTS", "EDIT_ORDERS")
+                        .requestMatchers("/api/images/delete").hasAuthority("EDIT_PRODUCTS")
+                        .requestMatchers("/api/images/upload").hasAuthority("EDIT_PRODUCTS")
                         .requestMatchers("/api/images/link").hasAuthority("VIEW_PRODUCTS")
                         .requestMatchers("/api/orders/all").hasAuthority("VIEW_ALL_ORDERS")
                         .requestMatchers("/api/orders/get").hasAuthority("VIEW_USER_ORDERS")

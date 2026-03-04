@@ -1,21 +1,22 @@
 package org.mrpo.lab1.services;
 
-import io.minio.GetPresignedObjectUrlArgs;
-import io.minio.MinioClient;
-import io.minio.PutObjectArgs;
+import io.minio.*;
 import io.minio.http.Method;
+import io.minio.messages.Item;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
+
+@RequiredArgsConstructor
 @Service
 public class ImageService {
 
     private final MinioClient minioClient;
-
-    public ImageService(MinioClient minioClient) {
-        this.minioClient = minioClient;
-    }
 
     @Value("${s3.bucket}")
     private String bucket;
@@ -40,5 +41,36 @@ public class ImageService {
                         .expiry(2, java.util.concurrent.TimeUnit.HOURS)
                         .build()
         );
+    }
+
+    public void deleteFile(String filename) throws Exception {
+        minioClient.removeObject(
+                RemoveObjectArgs.builder()
+                        .bucket(bucket)
+                        .object(filename)
+                        .build()
+        );
+    }
+
+    public List<String> findFilesByPattern(String filename) throws Exception {
+        List<String> foundFiles = new ArrayList<>();
+
+        Iterable<Result<Item>> results = minioClient.listObjects(
+                ListObjectsArgs.builder()
+                        .bucket(bucket)
+                        .prefix(filename + ".")
+                        .build()
+        );
+
+        for (Result<Item> result : results) {
+            Item item = result.get();
+            String name = item.objectName();
+
+            if (name.matches("^" + Pattern.quote(filename) + "\\.[a-zA-Z0-9]+$")) {
+                foundFiles.add(name);
+            }
+        }
+
+        return foundFiles;
     }
 }

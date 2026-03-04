@@ -23,7 +23,7 @@ public class MinioInitializer {
     private String bucketName;
 
     private static final Logger log = LoggerFactory.getLogger(MinioInitializer.class);
-
+    
     @EventListener(ApplicationReadyEvent.class)
     public void initBuckets() {
         try {

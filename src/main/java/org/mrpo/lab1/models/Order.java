@@ -2,10 +2,14 @@ package org.mrpo.lab1.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.List;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "`order`")
 public class Order {
@@ -42,68 +46,4 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "status_id")
     private Status status;
-
-    public long getId() {
-        return id;
-    }
-
-    public List<OrderProduct> getOrderProducts() {
-        return orderProducts;
-    }
-
-    public Date getOrderDate() {
-        return orderDate;
-    }
-
-    public Date getDeliveryDate() {
-        return deliveryDate;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public int getReceiveCode() {
-        return receiveCode;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setOrderProducts(List<OrderProduct> orderProducts) {
-        this.orderProducts = orderProducts;
-    }
-
-    public void setOrderDate(Date orderDate) {
-        this.orderDate = orderDate;
-    }
-
-    public void setDeliveryDate(Date deliveryDate) {
-        this.deliveryDate = deliveryDate;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void setReceiveCode(int receiveCode) {
-        this.receiveCode = receiveCode;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
 }

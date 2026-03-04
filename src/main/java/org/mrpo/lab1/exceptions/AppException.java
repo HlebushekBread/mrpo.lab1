@@ -1,7 +1,12 @@
 package org.mrpo.lab1.exceptions;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 
+@Getter
+@Setter
 public class AppException {
     private int status;
     private String message;
@@ -11,29 +16,5 @@ public class AppException {
         this.status = status;
         this.message = message;
         this.timestamp = new Date();
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public Date getTimestamp() {
-        return timestamp;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
     }
 }

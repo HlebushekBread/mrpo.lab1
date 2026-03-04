@@ -1,5 +1,6 @@
 package org.mrpo.lab1.controllers;
 
+import lombok.RequiredArgsConstructor;
 import org.mrpo.lab1.dtos.JwtRequest;
 import org.mrpo.lab1.dtos.JwtResponse;
 import org.mrpo.lab1.exceptions.AppException;
@@ -13,18 +14,13 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
     private final UserDetailsServiceImpl userDetailsService;
     private final JwtUtils jwtUtils;
     private final AuthenticationManager authenticationManager;
-
-    public AuthController(UserDetailsServiceImpl userDetailsService, JwtUtils jwtUtils, AuthenticationManager authenticationManager) {
-        this.userDetailsService = userDetailsService;
-        this.jwtUtils = jwtUtils;
-        this.authenticationManager = authenticationManager;
-    }
 
     @PostMapping("/login")
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) {

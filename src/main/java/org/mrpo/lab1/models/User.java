@@ -5,7 +5,11 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "`user`")
 public class User {
@@ -39,46 +43,6 @@ public class User {
         this.role = role;
         this.fullName = fullName;
         this.username = username;
-        this.password = password;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public void setUsername(String login) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
         this.password = password;
     }
 }

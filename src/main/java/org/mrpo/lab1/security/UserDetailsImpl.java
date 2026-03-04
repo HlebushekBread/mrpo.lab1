@@ -27,8 +27,8 @@ public class UserDetailsImpl implements UserDetails {
         SimpleGrantedAuthority viewUserOrdersAuthority = new SimpleGrantedAuthority("VIEW_USER_ORDERS");
         SimpleGrantedAuthority searchAndSortProductsAuthority = new SimpleGrantedAuthority("SEARCH_AND_SORT_PRODUCTS");
         SimpleGrantedAuthority viewAllOrdersAuthority = new SimpleGrantedAuthority("VIEW_ALL_ORDERS");
-        SimpleGrantedAuthority redactProductsAuthority = new SimpleGrantedAuthority("REDACT_PRODUCTS");
-        SimpleGrantedAuthority redactOrdersAuthority = new SimpleGrantedAuthority("REDACT_ORDERS");
+        SimpleGrantedAuthority editProductsAuthority = new SimpleGrantedAuthority("EDIT_PRODUCTS");
+        SimpleGrantedAuthority editOrdersAuthority = new SimpleGrantedAuthority("EDIT_ORDERS");
 
         switch (String.valueOf(user.getRole().getId())) {
             case "1":
@@ -51,8 +51,8 @@ public class UserDetailsImpl implements UserDetails {
                 grantedAuthorities.add(searchAndSortProductsAuthority);
                 grantedAuthorities.add(viewAllOrdersAuthority);
 
-                grantedAuthorities.add(redactProductsAuthority);
-                grantedAuthorities.add(redactOrdersAuthority);
+                grantedAuthorities.add(editProductsAuthority);
+                grantedAuthorities.add(editOrdersAuthority);
                 break;
         }
 
