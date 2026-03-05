@@ -25,12 +25,30 @@ public class ProductService {
         return productRepository.findAll();
     }
 
+    public List<String> findAllArticles() {
+        return productRepository.findAllArticles();
+    }
+
     public Product findByArticle(String article) {
-        return productRepository.findByArticle(article).orElse(null);
+        return productRepository.findById(article).orElse(null);
     }
 
     @Transactional
-    public void save(Product product) {
+    public void save(ProductDto productDto) {
+        Product product = new Product();
+        product.setArticle(productDto.getArticle());
+        product.setName(productDto.getName());
+        product.setPrice(productDto.getPrice());
+        product.setDiscount(productDto.getDiscount());
+        product.setAmount(productDto.getAmount());
+        product.setDescription(productDto.getDescription());
+        if (productDto.getImage() != null) {
+            product.setImage(productDto.getImage());
+        }
+        product.setUnit(unitService.findById(productDto.getUnitId()));
+        product.setCategory(categoryService.findById(productDto.getCategoryId()));
+        product.setManufacturer(manufacturerService.findById(productDto.getManufacturerId()));
+        product.setProvider(providerService.findById(productDto.getProviderId()));
         productRepository.save(product);
     }
 
@@ -49,9 +67,11 @@ public class ProductService {
         product.setCategory(categoryService.findById(productDto.getCategoryId()));
         product.setManufacturer(manufacturerService.findById(productDto.getManufacturerId()));
         product.setProvider(providerService.findById(productDto.getProviderId()));
+        productRepository.save(product);
     }
 
+    @Transactional
     public void delete(String article) {
-        productRepository.deleteById(article);
+        productRepository.deleteByArticle(article);
     }
 }

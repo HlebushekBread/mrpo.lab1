@@ -50,6 +50,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/images/link").hasAuthority("VIEW_PRODUCTS")
                         .requestMatchers("/api/orders/all").hasAuthority("VIEW_ALL_ORDERS")
                         .requestMatchers("/api/orders/get").hasAuthority("VIEW_USER_ORDERS")
+                        .requestMatchers("/api/products/delete").hasAuthority("EDIT_PRODUCTS")
+                        .requestMatchers("/api/products/create").hasAuthority("EDIT_PRODUCTS")
                         .requestMatchers("/api/auth/login").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -66,7 +68,7 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:4200"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(List.of("*"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
