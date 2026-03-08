@@ -41,17 +41,29 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/manufacturers").hasAnyAuthority("EDIT_PRODUCTS", "EDIT_ORDERS")
-                        .requestMatchers("/api/providers").hasAnyAuthority("EDIT_PRODUCTS", "EDIT_ORDERS")
-                        .requestMatchers("/api/categories").hasAnyAuthority("EDIT_PRODUCTS", "EDIT_ORDERS")
-                        .requestMatchers("/api/units").hasAnyAuthority("EDIT_PRODUCTS", "EDIT_ORDERS")
+                        .requestMatchers("/api/manufacturers").hasAnyAuthority("SEARCH_AND_SORT_PRODUCTS", "EDIT_PRODUCTS", "EDIT_ORDERS")
+                        .requestMatchers("/api/providers").hasAnyAuthority("SEARCH_AND_SORT_PRODUCTS", "EDIT_PRODUCTS", "EDIT_ORDERS")
+                        .requestMatchers("/api/categories").hasAnyAuthority("SEARCH_AND_SORT_PRODUCTS", "EDIT_PRODUCTS", "EDIT_ORDERS")
+                        .requestMatchers("/api/units").hasAnyAuthority("SEARCH_AND_SORT_PRODUCTS", "EDIT_PRODUCTS", "EDIT_ORDERS")
+                        .requestMatchers("/api/statuses").hasAuthority("EDIT_ORDERS")
+                        .requestMatchers("/api/addresses").hasAuthority("EDIT_ORDERS")
+
+                        .requestMatchers("/api/users/users").hasAuthority("EDIT_ORDERS")
+
                         .requestMatchers("/api/images/delete").hasAuthority("EDIT_PRODUCTS")
                         .requestMatchers("/api/images/upload").hasAuthority("EDIT_PRODUCTS")
                         .requestMatchers("/api/images/link").hasAuthority("VIEW_PRODUCTS")
+
+                        .requestMatchers("/api/orders/delete").hasAuthority("EDIT_ORDERS")
+                        .requestMatchers("/api/orders/save").hasAuthority("EDIT_ORDERS")
+                        .requestMatchers("/api/orders/ids").hasAuthority("EDIT_ORDERS")
                         .requestMatchers("/api/orders/all").hasAuthority("VIEW_ALL_ORDERS")
                         .requestMatchers("/api/orders/get").hasAuthority("VIEW_USER_ORDERS")
+                        .requestMatchers("/api/orders/{id}").hasAuthority("EDIT_ORDERS")
+
                         .requestMatchers("/api/products/delete").hasAuthority("EDIT_PRODUCTS")
-                        .requestMatchers("/api/products/create").hasAuthority("EDIT_PRODUCTS")
+                        .requestMatchers("/api/products/save").hasAuthority("EDIT_PRODUCTS")
+
                         .requestMatchers("/api/auth/login").permitAll()
                         .anyRequest().authenticated()
                 )

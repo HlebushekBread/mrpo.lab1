@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -16,22 +17,18 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
-    @OneToMany
-    @JoinColumn(name = "order_id")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderProduct> orderProducts;
 
     @Column(name = "order_date")
-    @NotEmpty(message = "Order date cannot be empty")
     private Date orderDate;
 
     @Column(name = "delivery_date")
-    @NotEmpty(message = "Delivery date cannot be empty")
     private Date deliveryDate;
 
     @ManyToOne
-    @NotEmpty(message = "Delivery address cannot be empty")
     @JoinColumn(name = "address_id")
     private Address address;
 
@@ -40,7 +37,6 @@ public class Order {
     private User user;
 
     @Column(name = "receive_code")
-    @NotEmpty(message = "Receive code cannot be empty")
     private int receiveCode;
 
     @ManyToOne

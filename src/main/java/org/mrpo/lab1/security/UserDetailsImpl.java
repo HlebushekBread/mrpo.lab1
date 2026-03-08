@@ -25,6 +25,7 @@ public class UserDetailsImpl implements UserDetails {
 
         SimpleGrantedAuthority viewProductsAuthority = new SimpleGrantedAuthority("VIEW_PRODUCTS");
         SimpleGrantedAuthority viewUserOrdersAuthority = new SimpleGrantedAuthority("VIEW_USER_ORDERS");
+        SimpleGrantedAuthority makeOrdersAuthority = new SimpleGrantedAuthority("MAKE_ORDERS");
         SimpleGrantedAuthority searchAndSortProductsAuthority = new SimpleGrantedAuthority("SEARCH_AND_SORT_PRODUCTS");
         SimpleGrantedAuthority viewAllOrdersAuthority = new SimpleGrantedAuthority("VIEW_ALL_ORDERS");
         SimpleGrantedAuthority editProductsAuthority = new SimpleGrantedAuthority("EDIT_PRODUCTS");
@@ -37,6 +38,7 @@ public class UserDetailsImpl implements UserDetails {
             case "2":
                 grantedAuthorities.add(viewProductsAuthority);
 
+                grantedAuthorities.add(makeOrdersAuthority);
                 grantedAuthorities.add(viewUserOrdersAuthority);
                 break;
             case "3":

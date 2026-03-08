@@ -33,41 +33,41 @@ public class ProductService {
         return productRepository.findById(article).orElse(null);
     }
 
-    @Transactional
-    public void save(ProductDto productDto) {
-        Product product = new Product();
-        product.setArticle(productDto.getArticle());
-        product.setName(productDto.getName());
-        product.setPrice(productDto.getPrice());
-        product.setDiscount(productDto.getDiscount());
-        product.setAmount(productDto.getAmount());
-        product.setDescription(productDto.getDescription());
-        if (productDto.getImage() != null) {
-            product.setImage(productDto.getImage());
-        }
-        product.setUnit(unitService.findById(productDto.getUnitId()));
-        product.setCategory(categoryService.findById(productDto.getCategoryId()));
-        product.setManufacturer(manufacturerService.findById(productDto.getManufacturerId()));
-        product.setProvider(providerService.findById(productDto.getProviderId()));
-        productRepository.save(product);
+    private String generateArticle() {
+        String[] characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".split("");
+        StringBuilder result;
+        int randomIndex;
+        do {
+            result = new StringBuilder();
+            for (int i = 0; i < 6; i++) {
+                randomIndex = (int) Math.floor(Math.random() * characters.length);
+                result.append(characters[randomIndex]);
+            }
+        } while (findAllArticles().contains(result.toString()));
+        return result.toString();
     }
 
     @Transactional
-    public void update(String article, ProductDto productDto) {
-        Product product = findByArticle(article);
+    public String save(ProductDto productDto) {
+        Product product = new Product();
+        if(!productDto.getArticle().equals("000000")) {
+            product.setArticle(productDto.getArticle());
+        } else {
+            product.setArticle(generateArticle());
+        }
         product.setName(productDto.getName());
         product.setPrice(productDto.getPrice());
         product.setDiscount(productDto.getDiscount());
         product.setAmount(productDto.getAmount());
         product.setDescription(productDto.getDescription());
-        if (productDto.getImage() != null) {
-            product.setImage(productDto.getImage());
-        }
         product.setUnit(unitService.findById(productDto.getUnitId()));
         product.setCategory(categoryService.findById(productDto.getCategoryId()));
         product.setManufacturer(manufacturerService.findById(productDto.getManufacturerId()));
         product.setProvider(providerService.findById(productDto.getProviderId()));
+
         productRepository.save(product);
+
+        return product.getArticle();
     }
 
     @Transactional

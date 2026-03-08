@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -37,51 +38,30 @@ public class ProductController {
         return productService.findByArticle(article);
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<?> createProduct (
+    @PutMapping(value = "/save", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> saveProduct(
             @RequestPart("product") ProductDto productDto,
             @RequestPart(value = "image", required = false) MultipartFile image) {
-        if(getAllArticles().contains(productDto.getArticle()) ){
-            return new ResponseEntity<>(new AppException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Article exists"), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        productService.save(productDto);
         if(image!=null) {
             try {
-                for(String name : imageService.findFilesByPattern(productDto.getArticle())) {
-                    imageService.deleteFile(name);
-                }
                 imageService.uploadFile(image);
             } catch (Exception e) {
                 return new ResponseEntity<>(new AppException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal server error"), HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
-        return ResponseEntity.ok().build();
-    }
-
-    @PutMapping(value = "/update/{article}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> updateProduct(
-            @PathVariable("article") String article,
-            @RequestPart("product") ProductDto productDto,
-            @RequestPart(value = "image", required = false) MultipartFile image) {
-        productService.update(article, productDto);
-        if(image!=null) {
-            try {
-                for(String name : imageService.findFilesByPattern(article)) {
-                    imageService.deleteFile(name);
-                }
-                imageService.uploadFile(image);
-            } catch (Exception e) {
-                return new ResponseEntity<>(new AppException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal server error"), HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>(Map.of("article", productService.save(productDto)), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{article}")
     public ResponseEntity<?> deleteProduct(@PathVariable("article") String article) {
         if(getAllArticles().contains(article) ) {
-            this.productService.delete(article);
-            return ResponseEntity.ok().build();
+            try {
+                imageService.deleteFile(article);
+                productService.delete(article);
+                return ResponseEntity.ok().build();
+            } catch (Exception e) {
+                return new ResponseEntity<>(new AppException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal server error"), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
         return new ResponseEntity<>(new AppException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Article not exists"), HttpStatus.INTERNAL_SERVER_ERROR);
     }

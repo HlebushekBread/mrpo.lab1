@@ -16,5 +16,4 @@ public class ProductDto {
     private double discount;
     private int amount;
     private Long unitId;
-    private String image;
 }

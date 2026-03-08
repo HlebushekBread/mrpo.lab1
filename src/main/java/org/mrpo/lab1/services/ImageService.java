@@ -51,26 +51,4 @@ public class ImageService {
                         .build()
         );
     }
-
-    public List<String> findFilesByPattern(String filename) throws Exception {
-        List<String> foundFiles = new ArrayList<>();
-
-        Iterable<Result<Item>> results = minioClient.listObjects(
-                ListObjectsArgs.builder()
-                        .bucket(bucket)
-                        .prefix(filename + ".")
-                        .build()
-        );
-
-        for (Result<Item> result : results) {
-            Item item = result.get();
-            String name = item.objectName();
-
-            if (name.matches("^" + Pattern.quote(filename) + "\\.[a-zA-Z0-9]+$")) {
-                foundFiles.add(name);
-            }
-        }
-
-        return foundFiles;
-    }
 }
