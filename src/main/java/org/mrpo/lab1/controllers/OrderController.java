@@ -2,6 +2,7 @@ package org.mrpo.lab1.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.mrpo.lab1.dtos.OrderDto;
+import org.mrpo.lab1.dtos.UserOrderDto;
 import org.mrpo.lab1.exceptions.AppException;
 import org.mrpo.lab1.models.Order;
 import org.mrpo.lab1.services.OrderService;
@@ -40,6 +41,11 @@ public class OrderController {
     @GetMapping("/{id}")
     public Order getOrderById(@PathVariable("id") long id) {
         return orderService.findById(id);
+    }
+
+    @PostMapping("/make")
+    public ResponseEntity<?> saveOrder(@RequestBody UserOrderDto userOrderDto) {
+        return new ResponseEntity<>(Map.of("id", orderService.make(userOrderDto)), HttpStatus.OK);
     }
 
     @PutMapping("/save")

@@ -46,7 +46,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/categories").hasAnyAuthority("SEARCH_AND_SORT_PRODUCTS", "EDIT_PRODUCTS", "EDIT_ORDERS")
                         .requestMatchers("/api/units").hasAnyAuthority("SEARCH_AND_SORT_PRODUCTS", "EDIT_PRODUCTS", "EDIT_ORDERS")
                         .requestMatchers("/api/statuses").hasAuthority("EDIT_ORDERS")
-                        .requestMatchers("/api/addresses").hasAuthority("EDIT_ORDERS")
+                        .requestMatchers("/api/addresses").hasAnyAuthority("EDIT_ORDERS", "MAKE_ORDERS")
 
                         .requestMatchers("/api/users/users").hasAuthority("EDIT_ORDERS")
 
@@ -56,6 +56,7 @@ public class SecurityConfig {
 
                         .requestMatchers("/api/orders/delete").hasAuthority("EDIT_ORDERS")
                         .requestMatchers("/api/orders/save").hasAuthority("EDIT_ORDERS")
+                        .requestMatchers("/api/orders/make").hasAuthority("MAKE_ORDERS")
                         .requestMatchers("/api/orders/ids").hasAuthority("EDIT_ORDERS")
                         .requestMatchers("/api/orders/all").hasAuthority("VIEW_ALL_ORDERS")
                         .requestMatchers("/api/orders/get").hasAuthority("VIEW_USER_ORDERS")
@@ -79,7 +80,14 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:4200"));
+
+        String origins = System.getenv("ALLOWED_ORIGINS");
+        if (origins != null && !origins.isEmpty()) {
+            configuration.setAllowedOrigins(Arrays.asList(origins.split(",")));
+        } else {
+            configuration.setAllowedOrigins(List.of("http://localhost:4200"));
+        }
+
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(List.of("*"));
 

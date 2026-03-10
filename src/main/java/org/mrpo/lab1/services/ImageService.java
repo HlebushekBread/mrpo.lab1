@@ -21,11 +21,11 @@ public class ImageService {
     @Value("${s3.bucket}")
     private String bucket;
 
-    public void uploadFile(MultipartFile file) throws Exception {
+    public void uploadFile(MultipartFile file, String name) throws Exception {
         minioClient.putObject(
                 PutObjectArgs.builder()
                         .bucket(bucket)
-                        .object(file.getOriginalFilename())
+                        .object(name)
                         .stream(file.getInputStream(), file.getSize(), -1)
                         .contentType(file.getContentType())
                         .build()

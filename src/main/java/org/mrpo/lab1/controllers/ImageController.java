@@ -15,6 +15,7 @@ public class ImageController {
 
     private final ImageService imageService;
 
+    /*
     @PostMapping("/upload")
     public ResponseEntity<Map<String, String>> upload(@RequestParam("image") MultipartFile file) {
         try {
@@ -28,6 +29,7 @@ public class ImageController {
             ));
         }
     }
+    */
 
     @GetMapping("/link/{filename}")
     public ResponseEntity<Map<String, String>> getLink(@PathVariable String filename) {

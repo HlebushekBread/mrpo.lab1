@@ -42,14 +42,15 @@ public class ProductController {
     public ResponseEntity<?> saveProduct(
             @RequestPart("product") ProductDto productDto,
             @RequestPart(value = "image", required = false) MultipartFile image) {
+        String article = productService.save(productDto);
         if(image!=null) {
             try {
-                imageService.uploadFile(image);
+                imageService.uploadFile(image, article);
             } catch (Exception e) {
                 return new ResponseEntity<>(new AppException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal server error"), HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
-        return new ResponseEntity<>(Map.of("article", productService.save(productDto)), HttpStatus.OK);
+        return new ResponseEntity<>(Map.of("article", article), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{article}")
