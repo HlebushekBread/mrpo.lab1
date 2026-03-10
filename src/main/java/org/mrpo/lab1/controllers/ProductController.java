@@ -2,7 +2,6 @@ package org.mrpo.lab1.controllers;
 
 import lombok.RequiredArgsConstructor;
 import org.mrpo.lab1.dtos.ProductDto;
-import org.mrpo.lab1.exceptions.AppException;
 import org.mrpo.lab1.models.Product;
 import org.mrpo.lab1.services.ImageService;
 import org.mrpo.lab1.services.ProductService;
@@ -47,7 +46,7 @@ public class ProductController {
             try {
                 imageService.uploadFile(image, article);
             } catch (Exception e) {
-                return new ResponseEntity<>(new AppException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal server error"), HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
         return new ResponseEntity<>(Map.of("article", article), HttpStatus.OK);
@@ -61,9 +60,9 @@ public class ProductController {
                 productService.delete(article);
                 return ResponseEntity.ok().build();
             } catch (Exception e) {
-                return new ResponseEntity<>(new AppException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal server error"), HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
-        return new ResponseEntity<>(new AppException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Article not exists"), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>("Article not exists", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

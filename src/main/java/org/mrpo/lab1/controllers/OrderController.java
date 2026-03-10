@@ -3,7 +3,6 @@ package org.mrpo.lab1.controllers;
 import lombok.RequiredArgsConstructor;
 import org.mrpo.lab1.dtos.OrderDto;
 import org.mrpo.lab1.dtos.UserOrderDto;
-import org.mrpo.lab1.exceptions.AppException;
 import org.mrpo.lab1.models.Order;
 import org.mrpo.lab1.services.OrderService;
 import org.springframework.http.HttpStatus;
@@ -59,6 +58,6 @@ public class OrderController {
             orderService.delete(id);
             return ResponseEntity.ok().build();
         }
-        return new ResponseEntity<>(new AppException(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Article not exists"), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>("Article not exists", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

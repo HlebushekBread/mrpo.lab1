@@ -3,7 +3,6 @@ package org.mrpo.lab1.controllers;
 import lombok.RequiredArgsConstructor;
 import org.mrpo.lab1.dtos.JwtRequest;
 import org.mrpo.lab1.dtos.JwtResponse;
-import org.mrpo.lab1.exceptions.AppException;
 import org.mrpo.lab1.security.UserDetailsImpl;
 import org.mrpo.lab1.security.UserDetailsServiceImpl;
 import org.mrpo.lab1.security.JwtUtils;
@@ -33,7 +32,7 @@ public class AuthController {
                 userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
             }
         } catch (BadCredentialsException e) {
-            return new ResponseEntity<>(new AppException(HttpStatus.UNAUTHORIZED.value(), "Incorrect credentials"), HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>("Incorrect credentials", HttpStatus.UNAUTHORIZED);
         }
         String token = jwtUtils.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token));
