@@ -47,6 +47,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/units").hasAnyAuthority("SEARCH_AND_SORT_PRODUCTS", "EDIT_PRODUCTS", "EDIT_ORDERS")
                         .requestMatchers("/api/statuses").hasAuthority("EDIT_ORDERS")
                         .requestMatchers("/api/addresses").hasAnyAuthority("EDIT_ORDERS", "MAKE_ORDERS")
+                        .requestMatchers("/api/orderProducts").hasAuthority("EDIT_ORDERS")
 
                         .requestMatchers("/api/users/users").hasAuthority("EDIT_ORDERS")
 

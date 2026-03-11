@@ -15,7 +15,7 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class ProductService {
     private final ProductRepository productRepository;
-
+    
     private final UnitService unitService;
     private final ProviderService providerService;
     private final ManufacturerService manufacturerService;

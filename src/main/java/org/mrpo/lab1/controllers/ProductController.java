@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.mrpo.lab1.dtos.ProductDto;
 import org.mrpo.lab1.models.Product;
 import org.mrpo.lab1.services.ImageService;
+import org.mrpo.lab1.services.OrderProductService;
 import org.mrpo.lab1.services.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,6 +20,7 @@ import java.util.Map;
 @RequestMapping("/api/products")
 public class ProductController {
 
+    private final OrderProductService orderProductService;
     private final ProductService productService;
     private final ImageService imageService;
 
@@ -54,7 +56,7 @@ public class ProductController {
 
     @DeleteMapping("/delete/{article}")
     public ResponseEntity<?> deleteProduct(@PathVariable("article") String article) {
-        if(getAllArticles().contains(article) ) {
+        if(orderProductService.findOrderIdsByProductArticle(article).isEmpty()) {
             try {
                 imageService.deleteFile(article);
                 productService.delete(article);
@@ -63,6 +65,6 @@ public class ProductController {
                 return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
-        return new ResponseEntity<>("Article not exists", HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>("Product is in order", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
